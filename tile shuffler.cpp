@@ -45,6 +45,7 @@ int main()
     }
 
     // Shuffle the wall
+    srand((signed int)time(0));
     unsigned int shuffles = 6502;   // The number of times 2 tiles are swapped
     for(int i=0; i<shuffles; i++)
     {
@@ -62,44 +63,44 @@ int main()
     {
         if(theWall[i]!=i)
         {
-            cout << "[" << i << "]\t" << theWall[i] << "\t" << tiles[(theWall[i])] << endl << endl;
+            cout << "[" << i << "]\t" << theWall[i] << "\t" << tiles[(theWall[i])] << endl;
         }
     }
 
     // Draw hands
-    // We'll just assume player1 is the dealer since they draw first
-    short int playerHands[4][13];
+    // I haven't implemented a 14th "just drawn/tsumo" tile
+    const int NUM_PLAYERS = 4;
+    const int MAX_HAND_SIZE = 13;
+    short int playerHands[NUM_PLAYERS][MAX_HAND_SIZE];
     short int lastDrawnTile = 0;
 
-    /*
-    playerHands[0][0] = theWall[0];
-    playerHands[0][1] = theWall[1];
-    playerHands[0][2] = theWall[2];
-    playerHands[0][3] = theWall[3];
-
-    playerHands[1][0] = theWall[4];
-    playerHands[1][1] = theWall[5];
-    playerHands[1][2] = theWall[6];
-    playerHands[1][3] = theWall[7];
-    ...
-    playerHands[3][0] = theWall[12];
-    playerHands[3][1] = theWall[13];
-    playerHands[3][2] = theWall[14];
-    playerHands[3][3] = theWall[15];
-
-    playerHands[0][4] = theWall[16];
-    playerHands[0][5] = theWall[17];
-    playerHands[0][6] = theWall[18];
-    playerHands[0][7] = theWall[19];
-    */
-
-    // Show player hands
-    for(int i=0; i<13; i++)
+    // Draw player hands
+    for(int i=0; i<3; i++)      // Each rotation of all 4 players drawing their tiles
     {
-        cout << "[" << tiles[(playerHands[0][i])] << "]";
+        for(int j=0; j<4; j++)  // Individual players drawing 4 tiles at a time
+        {                       // I feel like this *could* be a loop but it also seems unnecessary
+            playerHands[j][(i*4+0)] = theWall[lastDrawnTile++];
+            playerHands[j][(i*4+1)] = theWall[lastDrawnTile++];
+            playerHands[j][(i*4+2)] = theWall[lastDrawnTile++];
+            playerHands[j][(i*4+3)] = theWall[lastDrawnTile++];
+        }
+    }
+    for(int i=0; i<4; i++)      // Each player drawing their last tile
+    {
+        playerHands[i][12] = theWall[lastDrawnTile++];
     }
 
-    cout << endl;
+    // Print player hands
+    for(int i=0; i<4; i++)
+    {
+    cout << "\nPlayer " << i+1 << ":";
+        for(int j=0; j<13; j++)
+        {
+            cout << "[" << tiles[(playerHands[i][j])] << "]";  
+        }
+    }
+
+    cout << endl << endl;
 
     return 0;
 }
