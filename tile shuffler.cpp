@@ -75,26 +75,26 @@ int main()
     short int lastDrawnTile = 0;
 
     // Draw player hands
-    for(int i=0; i<3; i++)      // Each rotation of all 4 players drawing their tiles
+    for(int i=0; i<3; i++)                  // Each rotation of all 4 players drawing their tiles
     {
-        for(int j=0; j<4; j++)  // Individual players drawing 4 tiles at a time
-        {                       // I feel like this *could* be a loop but it also seems unnecessary
+        for(int j=0; j<NUM_PLAYERS; j++)    // Individual players drawing 4 tiles at a time
+        {                                   // I feel like this *could* be a loop but it also seems unnecessary
             playerHands[j][(i*4+0)] = theWall[lastDrawnTile++];
             playerHands[j][(i*4+1)] = theWall[lastDrawnTile++];
             playerHands[j][(i*4+2)] = theWall[lastDrawnTile++];
             playerHands[j][(i*4+3)] = theWall[lastDrawnTile++];
         }
     }
-    for(int i=0; i<4; i++)      // Each player drawing their last tile
+    for(int i=0; i<NUM_PLAYERS; i++)      // Each player drawing their last tile
     {
-        playerHands[i][12] = theWall[lastDrawnTile++];
+        playerHands[i][MAX_HAND_SIZE-1] = theWall[lastDrawnTile++];
     }
 
     // Print player hands
-    for(int i=0; i<4; i++)
+    for(int i=0; i<NUM_PLAYERS; i++)
     {
     cout << "\nPlayer " << i+1 << ":";
-        for(int j=0; j<13; j++)
+        for(int j=0; j<MAX_HAND_SIZE; j++)
         {
             cout << "[" << tiles[(playerHands[i][j])] << "]";  
         }
