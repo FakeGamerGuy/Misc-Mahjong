@@ -57,12 +57,47 @@ int main()
     }
     
     // Show hand
-    cout << "Ordinal║TileID ║Tile Type" << endl;
-    cout << "═══════╩═══════╩═════════" << endl;
-    for(int i=0; i<player1Hand.size(); i++)
+    cout << "Tile ID:\t";
+    for(int i=0; i<tilesToDraw; i++)
     {
-        cout << player1Hand[i] << "\t" << player1Hand[i]/4 << "." << player1Hand[i]%4 << "\t" << tileNames[player1Hand[i]/4] << endl;
+        cout << player1Hand[i] << "\t";
     }
+    cout << "\nTile Name:\t";
+    for(int i=0; i<tilesToDraw; i++)
+    {
+        cout << tileNames[player1Hand[i]/4] << "\t";
+    }
+    cout << endl;
+
+    // Sort hand
+    bool isSorted = false;
+    while(!isSorted)
+    {
+        isSorted = true;
+        for(int i=0; i<tilesToDraw; i++)
+        {
+            if(player1Hand[i]>player1Hand[i+1])
+            {
+                isSorted = false;
+                int temp = player1Hand[i];
+                player1Hand[i] = player1Hand[i+1];
+                player1Hand[i+1] = temp;
+            }
+        }
+    }
+
+    // Show hand -- This should be a function but ¯\_(ツ)_/¯
+    cout << "\nTile ID:\t";
+    for(int i=0; i<tilesToDraw; i++)
+    {
+        cout << player1Hand[i] << "\t";
+    }
+    cout << "\nTile Name:\t";
+    for(int i=0; i<tilesToDraw; i++)
+    {
+        cout << tileNames[player1Hand[i]/4] << "\t";
+    }
+    cout << endl;
     
     return 0;
 }
